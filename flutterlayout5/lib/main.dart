@@ -1,28 +1,17 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MainApp());
-}
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Aplikasi Profil',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
-      ),
-
-      home: const ProfilePage(), 
-    );
-  }
+  runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: ProfilePage(),
+  ));
 }
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
+  
+  final String userName = 'Rizal Hermawan';
+  final String role = 'Mahasiswa Teknik Informatika';
 
   @override
   Widget build(BuildContext context) {
@@ -34,40 +23,89 @@ class ProfilePage extends StatelessWidget {
         foregroundColor: Colors.white,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const CircleAvatar(
-              radius: 60,
-              backgroundColor: Colors.grey,
-              child: Icon(Icons.person, size: 60, color: Colors.white),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'Rizal Hermawan',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
+        child: Padding(
+          padding:  const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const ProfileAvatar(),
+              const SizedBox(height: 16),
+
+              ProfileInfo(
+                name: userName,
+                role: role,
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Mahasiswa Teknik Informatika',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey[900],
+              const SizedBox(height: 24),
+              ElevatedButton.icon(
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Fitur edit belum aktif"),
+                      ),
+                    );
+                  },
+                icon: const Icon(Icons.edit),
+                label: const Text("edit profile"),
               ),
-            ),
-            const SizedBox(height: 32),
-            // Tombol interaksi standar
-            ElevatedButton.icon(
-              onPressed: () {},
-              icon: const Icon(Icons.edit),
-              label: const Text('Edit Profil'),
-            )
-          ],
-        ),
+            ],
+          )
+        )
       ),
+    );
+  }
+}
+
+
+class ProfileAvatar extends StatelessWidget {
+  const ProfileAvatar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const CircleAvatar(
+      radius: 50,
+      backgroundColor: Colors.grey,
+      child: Icon(
+        Icons.person,
+        size: 50,
+        color: Colors.white,
+      ),
+    );
+  }
+}
+
+class ProfileInfo extends StatelessWidget {
+  final String name;
+  final String role;
+
+  const ProfileInfo({
+    super.key,
+    required this.name,
+    required this.role,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          name,
+          style: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 8),
+        Text(
+          role,
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.grey[900],
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
 }
