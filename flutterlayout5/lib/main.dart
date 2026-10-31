@@ -13,6 +13,13 @@ class ProfilePage extends StatelessWidget {
   final String userName = 'Rizal Hermawan';
   final String role = 'Mahasiswa Teknik Informatika';
 
+  final List<String> experiences = const [
+    'Operator & Admin - CV. Fauzan Net',
+    'Teknisi - CV. Fauzan Net',
+    'Mekanik - Wijaya Motor',
+    'Web Developer - Wijaya Motor',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +55,36 @@ class ProfilePage extends StatelessWidget {
                 label: const Text("edit profile"),
               ),
               const ProfileStats(),
+              const SizedBox(height: 24),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Pengalaman Kerja',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const Divider(),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: experiences.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      elevation: 2,
+                      margin: const EdgeInsets.symmetric(vertical: 6),
+                      child: ListTile(
+                        leading: const Icon(
+                          Icons.work,
+                          color: Colors.blueAccent,
+                        ),
+                        title: Text(experiences[index]),
+                      ),
+                    );
+                  },
+                ),
+              ),
             ],
           )
         )
