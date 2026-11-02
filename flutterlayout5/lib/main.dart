@@ -14,7 +14,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final String userName = 'Rizal Hermawan';
+  
+  String userName = 'Rizal Hermawan';
   final String role = 'Mahasiswa Teknik Informatika';
 
   final List<String> experiences = const [
@@ -23,6 +24,45 @@ class _ProfilePageState extends State<ProfilePage> {
     'Mekanik - Wijaya Motor',
     'Web Developer - Wijaya Motor',
   ];
+
+  void _showEditDialog() {
+    final TextEditingController nameController = TextEditingController(
+      text: userName,
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Edit Profil'),
+          content: TextFormField(
+            controller: nameController,
+            decoration: const InputDecoration(
+              labelText: 'Nama Baru',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); 
+              },
+              child: const Text('Batal'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  userName = nameController.text; 
+                });
+                Navigator.of(context).pop();
+              },
+              child: const Text('Simpan'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,19 +79,14 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              
               const SizedBox(height: 24),
               const ProfileAvatar(),
               const SizedBox(height: 24),
-
               ProfileInfo(name: userName, role: role),
               const SizedBox(height: 32),
               ElevatedButton.icon(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Fitur edit belum aktif")),
-                  );
-                },
+                // Panggil fungsi dialog di sini
+                onPressed: _showEditDialog,
                 icon: const Icon(Icons.edit),
                 label: const Text("Edit Profile"),
               ),
