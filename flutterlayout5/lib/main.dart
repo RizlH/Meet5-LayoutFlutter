@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: ProfilePage(),
-  ));
+  runApp(
+    const MaterialApp(debugShowCheckedModeBanner: false, home: ProfilePage()),
+  );
 }
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
-  
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   final String userName = 'Rizal Hermawan';
   final String role = 'Mahasiswa Teknik Informatika';
 
@@ -31,39 +35,33 @@ class ProfilePage extends StatelessWidget {
       ),
       body: Center(
         child: Padding(
-          padding:  const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const ProfileAvatar(),
-              const SizedBox(height: 16),
-
-              ProfileInfo(
-                name: userName,
-                role: role,
-              ),
               const SizedBox(height: 24),
+              const ProfileAvatar(),
+              const SizedBox(height: 24),
+
+              ProfileInfo(name: userName, role: role),
+              const SizedBox(height: 32),
               ElevatedButton.icon(
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Fitur edit belum aktif"),
-                      ),
-                    );
-                  },
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Fitur edit belum aktif")),
+                  );
+                },
                 icon: const Icon(Icons.edit),
                 label: const Text("Edit Profile"),
               ),
+              const SizedBox(height: 24),
               const ProfileStats(),
               const SizedBox(height: 24),
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Pengalaman Kerja',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
               const Divider(),
@@ -71,20 +69,17 @@ class ProfilePage extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: experiences.length,
                   itemBuilder: (context, index) {
-                    return ExperienceCard(
-                      experience: experiences[index],
-                    );
+                    return ExperienceCard(experience: experiences[index]);
                   },
                 ),
               ),
             ],
-          )
-        )
+          ),
+        ),
       ),
     );
   }
 }
-
 
 class ProfileAvatar extends StatelessWidget {
   const ProfileAvatar({super.key});
@@ -94,11 +89,7 @@ class ProfileAvatar extends StatelessWidget {
     return const CircleAvatar(
       radius: 50,
       backgroundColor: Colors.grey,
-      child: Icon(
-        Icons.person,
-        size: 50,
-        color: Colors.white,
-      ),
+      child: Icon(Icons.person, size: 50, color: Colors.white),
     );
   }
 }
@@ -107,11 +98,7 @@ class ProfileInfo extends StatelessWidget {
   final String name;
   final String role;
 
-  const ProfileInfo({
-    super.key,
-    required this.name,
-    required this.role,
-  });
+  const ProfileInfo({super.key, required this.name, required this.role});
 
   @override
   Widget build(BuildContext context) {
@@ -120,19 +107,13 @@ class ProfileInfo extends StatelessWidget {
       children: [
         Text(
           name,
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 8),
         Text(
           role,
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.grey[900],
-          ),
+          style: TextStyle(fontSize: 16, color: Colors.grey[900]),
           textAlign: TextAlign.center,
         ),
       ],
@@ -147,29 +128,17 @@ class ProfileStats extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(
-        vertical: 16,
-        horizontal: 8,
-      ),
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
       child: Row(
         children: const [
           Expanded(
-              child: StatItem(
-                count: "10",
-                label: "Proyek"
-              ),
+            child: StatItem(count: "10", label: "Proyek"),
           ),
           Expanded(
-            child: StatItem(
-              count: "300k",
-              label: "Followers",
-            ),
+            child: StatItem(count: "300k", label: "Followers"),
           ),
           Expanded(
-            child: StatItem(
-              count: '2',
-              label: 'Following',
-            ),
+            child: StatItem(count: '2', label: 'Following'),
           ),
         ],
       ),
@@ -181,11 +150,7 @@ class StatItem extends StatelessWidget {
   final String count;
   final String label;
 
-  const StatItem({
-    super.key,
-    required this.count,
-    required this.label,
-  });
+  const StatItem({super.key, required this.count, required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -201,13 +166,7 @@ class StatItem extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey[900],
-          ),
-        ),
+        Text(label, style: TextStyle(fontSize: 14, color: Colors.grey[900])),
       ],
     );
   }
@@ -216,28 +175,19 @@ class StatItem extends StatelessWidget {
 class ExperienceCard extends StatelessWidget {
   final String experience;
 
-  const ExperienceCard({
-    super.key,
-    required this.experience,
-  });
+  const ExperienceCard({super.key, required this.experience});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 3,
       margin: const EdgeInsets.symmetric(vertical: 6),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Row(
           children: [
-            const Icon(
-              Icons.work,
-              color: Colors.purple,
-              size: 24,
-            ),
+            const Icon(Icons.work, color: Colors.purple, size: 24),
             const SizedBox(width: 12),
             Expanded(
               child: Text(
