@@ -39,6 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              
               const SizedBox(height: 24),
               const ProfileAvatar(),
               const SizedBox(height: 24),
